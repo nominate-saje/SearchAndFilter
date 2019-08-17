@@ -146,33 +146,36 @@ export default class SearchResults extends Component {
             onSubmitEditing={this.handleSubmit}
           />
         </View>
-        <Text h4 style={styles.center}>Search Results</Text>
-        { this.state.isLoading ? this.isLoading() : null }
-        <ScrollView>   
-          {this.state.data.map((business, i) => (
-            <Card key={i} title={business.name}>
-              <View>
-              <View style={{ flex: 1, flexDirection: 'row', paddingBottom: 10 }}>
-                  <Image style={styles.image} source={{uri: business.image_url}} />
-                  <View>
-                    <Text>{business.location.address1.length > 1 ? business.location.address1 : 'N/A'}</Text>
-                    <Text>{business.phone.length > 1 ? business.display_phone : 'N/A'}</Text>
-                    <Text>Price Range: {business.price}</Text>
-                    <Text style={{color: 'blue'}} onPress={() => Linking.openURL(`${business.url}`)}>See it on yelp</Text>
+        <View style={{marginBottom: 200}}>
+
+          <Text h4 style={styles.center}>Search Results</Text>
+          { this.state.isLoading ? this.isLoading() : null }
+          <ScrollView>   
+            {this.state.data.map((business, i) => (
+              <Card key={i} title={business.name}>
+                <View>
+                <View style={{ flex: 1, flexDirection: 'row', paddingBottom: 10 }}>
+                    <Image style={styles.image} source={{uri: business.image_url}} />
+                    <View>
+                      <Text>{business.location.address1.length > 1 ? business.location.address1 : 'N/A'}</Text>
+                      <Text>{business.phone.length > 1 ? business.display_phone : 'N/A'}</Text>
+                      <Text>Price Range: {business.price}</Text>
+                      <Text style={{color: 'blue'}} onPress={() => Linking.openURL(`${business.url}`)}>See it on yelp</Text>
+                    </View>
                   </View>
+                  <Button
+                    raised
+                    title="NOMinate" 
+                    titleStyle={{ color: '#fff' }}
+                    buttonStyle={{ backgroundColor: '#ffaa00' }}
+                    onPress={() => {
+                    this.handleAddEvent(business.name, business.id)
+                  }}/>
                 </View>
-                <Button
-                  raised
-                  title="NOMinate" 
-                  titleStyle={{ color: '#fff' }}
-                  buttonStyle={{ backgroundColor: '#ffaa00' }}
-                  onPress={() => {
-                  this.handleAddEvent(business.name, business.id)
-                }}/>
-              </View>
-            </Card>
-          ))}
-        </ScrollView>
+              </Card>
+            ))}
+          </ScrollView>
+        </View>
       </View>
     )
   }
@@ -181,8 +184,7 @@ export default class SearchResults extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 1,
-    marginBottom: 200
+    flex: 1
   },
   image: {
     height: 70,
